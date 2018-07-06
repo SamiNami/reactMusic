@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import sound from './c.mp3'
 import './App.css';
 import Button from '@material-ui/core/Button';
 
@@ -28,7 +29,13 @@ class MusicBoard extends Component {
 			                         <source src={process.env.PUBLIC_URL + "c.mp3"} type="audio/mpeg" >
 			                              </source>
 		                  </audio>
-                        <Button variant="contained" color="primary" onClick = {() => {this.green.play()}} >
+                        <Button variant="contained" color="primary" onClick = {() => {
+                            this.green.pause()
+                            this.green.currentTime = 0;
+                            // sound.currentTime = 0;
+                            this.green.play()
+
+                        }} >
                             Change instrument
                         </Button>
 
