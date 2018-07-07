@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import sound from './c.mp3'
 import './App.css';
-import Button from '@material-ui/core/Button';
+import SoundButton from "./SoundButton.js";
 
 class MusicBoard extends Component {
 
@@ -11,43 +9,70 @@ class MusicBoard extends Component {
         this.state = {
             instrument: "drum",
         };
+        // binded button, sounds source, description
+        this.buttons = [
+            ["Q", process.env.PUBLIC_URL + "/sound/q.wav", "Clap" ],
+            ["W", process.env.PUBLIC_URL + "/sound/w.wav", "Clap 2" ],
+        ];
+
+    }
+
+    onKeyPressed(e) {
+        console.log(e.key);
+    }
+
+    onAudioButtonClick(i) {
+            console.log(this.buttons[i][3])
+            const buttonData = this.buttons[i];
+            const ref = buttonData[3].ref;
+            ref.pause()
+            ref.currentTime = 0;
+            ref.play()
 
     }
 
     render() {
 
         return (
-            <div className="container">
-                {/* top-panel */}
-                <div>
-                    <div>
-                        {this.state.instrument}
-                    </div>
-                    <div>
-                        <audio ref={(green) => { this.green = green; }}>
-                            {/* https://s3.amazonaws.com/freecodecamp/simonSound4.mp3 */}
-			                         <source src={process.env.PUBLIC_URL + "c.mp3"} type="audio/mpeg" >
-			                              </source>
-		                  </audio>
-                        <Button variant="contained" color="primary" onClick = {() => {
-                            this.green.pause()
-                            this.green.currentTime = 0;
-                            // sound.currentTime = 0;
-                            this.green.play()
-
-                        }} >
-                            Change instrument
-                        </Button>
-
-
-
-                    </div>
-                </div>
-
-                Kappa
-                {/* buttons */}
+            <div>
+                {
+                    this.buttons.map((buttonData, index) => {
+                        return (
+                            <SoundButton
+                                ref={(ref) => { this.buttons[index].push(ref)}}
+                                key={buttonData[0]}
+                                title={buttonData[0]}
+                                source={buttonData[1]}
+                                description={buttonData[2]}
+                                onAudioButtonClick={() => this.onAudioButtonClick(index)}
+                             />
+                        )
+                    })
+                }
 
             </div>
+            // <div
+            //     className="container"
+            //     autoFocus
+            //     tabIndex="-1"
+            //     onKeyDown={(e) => this.onKeyPressed(e)}
+            //  >
+            //
+            //             <Button variant="contained" color="primary" onClick = {() => {
+            //                 this.green.pause()
+            //                 this.green.currentTime = 0;
+            //                 // sound.currentTime = 0;
+            //                 this.green.play()
+            //
+            //             }} >
+            //
+            //             <audio ref={(green) => { this.green = green; }}>
+			//                          <source src={process.env.PUBLIC_URL + "/sound/w.wav"} type="audio/mpeg" >
+			//                               </source>
+		    //               </audio>
+            //                 Change instrument
+            //             </Button>
+            // </div>
             );
         }
     }
