@@ -7,6 +7,7 @@ class MusicBoard extends Component {
     constructor() {
         super();
         this.state = {
+            power: "off",
             description: "--------",
         };
         // bound button, sounds source, description
@@ -22,11 +23,15 @@ class MusicBoard extends Component {
     }
 
     onAudioButtonClick(i, key) {
+
+            if (this.state.power === "off") {
+                return;
+            }
             let buttonData;
             // index handles onClick
-            if (i) {
+            if (i || i === 0) {
                 buttonData = this.buttons[i];
-
+                console.log(i, buttonData)
             // else hanlde buttonpress
             } else {
                 buttonData = this.buttons.find((singleButton) => {
@@ -62,6 +67,23 @@ class MusicBoard extends Component {
         ref.play()
     }
 
+    togglePower() {
+        if (this.state.power === "off") {
+            this.setState({
+                power: "on",
+                // description: "--------"
+            });
+            return
+        }
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+        this.setState({
+            power: "off",
+            description: "--------"
+        });
+    }
+
     render() {
         return (
             <div
@@ -70,6 +92,9 @@ class MusicBoard extends Component {
                 tabIndex="-1"
                 onKeyDown={(e) => this.onKeyPressed(e)}
             >
+            <div onClick={() => this.togglePower()}>
+                {this.state.power}
+            </div>
             <div>{this.state.description}</div>
                 {
                     this.buttons.map((buttonData, index) => {
