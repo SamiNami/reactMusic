@@ -7,9 +7,9 @@ class MusicBoard extends Component {
     constructor() {
         super();
         this.state = {
-            instrument: "drum",
+            description: "--------",
         };
-        // binded button, sounds source, description
+        // bound button, sounds source, description
         this.buttons = [
             ["Q", process.env.PUBLIC_URL + "/sound/q.wav", "Clap" ],
             ["W", process.env.PUBLIC_URL + "/sound/w.wav", "Clap 2" ],
@@ -17,30 +17,49 @@ class MusicBoard extends Component {
     }
 
     onKeyPressed(e) {
-        // filter out bad keys
-        console.log("Pressed", e.key.toUpperCase());
+        // pass the key as uppercase
         this.onAudioButtonClick(false, e.key.toUpperCase());
     }
 
     onAudioButtonClick(i, key) {
-            let ref;
+            let buttonData;
             // index handles onClick
             if (i) {
-                const buttonData = this.buttons[i];
-                ref = buttonData[3].ref;
+                buttonData = this.buttons[i];
+
             // else hanlde buttonpress
             } else {
-                const found = this.buttons.find((buttonData) => {
-                    return buttonData[0] === key;
+                buttonData = this.buttons.find((singleButton) => {
+                    return singleButton[0] === key;
                 });
-                if (!found) {
+                if (!buttonData) {
                     return;
                 }
-                ref = found[3].ref
             }
-            ref.pause()
-            ref.currentTime = 0;
-            ref.play()
+            this.displayDescription(buttonData[2]);
+            this.playSoundFromRef(buttonData[3].ref);
+    }
+
+    displayDescription(description) {
+        this.setState({description});
+        // timeout used for setting the discpiton back to ----- after 500 ms
+        if (!this.timeout) {
+            this.timeout = setTimeout(() => {
+                this.setState({description: "--------"});
+            }, 500);
+            return
+        }
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.setState({description: "--------"});
+        }, 500);
+    }
+
+
+    playSoundFromRef(ref) {
+        ref.pause()
+        ref.currentTime = 0;
+        ref.play()
     }
 
     render() {
@@ -51,6 +70,7 @@ class MusicBoard extends Component {
                 tabIndex="-1"
                 onKeyDown={(e) => this.onKeyPressed(e)}
             >
+            <div>{this.state.description}</div>
                 {
                     this.buttons.map((buttonData, index) => {
                         return (
