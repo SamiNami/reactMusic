@@ -14,7 +14,6 @@ class MusicBoard extends Component {
             ["Q", process.env.PUBLIC_URL + "/sound/q.wav", "Clap" ],
             ["W", process.env.PUBLIC_URL + "/sound/w.wav", "Clap 2" ],
         ];
-
     }
 
     onKeyPressed(e) {
@@ -29,25 +28,22 @@ class MusicBoard extends Component {
             if (i) {
                 const buttonData = this.buttons[i];
                 ref = buttonData[3].ref;
-            // else hanlde buttonperss
+            // else hanlde buttonpress
             } else {
                 const found = this.buttons.find((buttonData) => {
                     return buttonData[0] === key;
                 });
-                console.log("--", found);
                 if (!found) {
                     return;
                 }
                 ref = found[3].ref
             }
-
             ref.pause()
             ref.currentTime = 0;
             ref.play()
     }
 
     render() {
-
         return (
             <div
                 className="container"
@@ -69,30 +65,7 @@ class MusicBoard extends Component {
                         )
                     })
                 }
-
             </div>
-            // <div
-            //     className="container"
-            //     autoFocus
-            //     tabIndex="-1"
-            //     onKeyDown={(e) => this.onKeyPressed(e)}
-            //  >
-            //
-            //             <Button variant="contained" color="primary" onClick = {() => {
-            //                 this.green.pause()
-            //                 this.green.currentTime = 0;
-            //                 // sound.currentTime = 0;
-            //                 this.green.play()
-            //
-            //             }} >
-            //
-            //             <audio ref={(green) => { this.green = green; }}>
-			//                          <source src={process.env.PUBLIC_URL + "/sound/w.wav"} type="audio/mpeg" >
-			//                               </source>
-		    //               </audio>
-            //                 Change instrument
-            //             </Button>
-            // </div>
             );
         }
     }

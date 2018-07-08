@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 
 class SoundButton extends Component {
-
-    constructor() {
-        super();
-    }
-
     render() {
         const { title, source, description, onAudioButtonClick } = this.props;
         return (
