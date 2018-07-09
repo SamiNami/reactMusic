@@ -8,7 +8,7 @@ class BGMusicPlayer extends Component {
         this.state = {
             music: "off",
         };
-        //
+        
         this.songs = {};
     }
 
@@ -23,8 +23,13 @@ class BGMusicPlayer extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-        console.log(prevProps, prevState)
+        if (!this.props.on) {
+            this.turnAllOff(this.songs);
+        }
 
+        if (prevState.music === this.state.music) {
+            return;
+        }
 
         if (this.state.music && this.songs[this.state.music]) {
             this.turnAllOff(this.songs)
