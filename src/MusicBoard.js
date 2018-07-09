@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import SoundButton from "./SoundButton.js";
 import BGMusicPlayer from "./BGMusicPlayer.js"
+import Switch from '@material-ui/core/Switch';
 
 class MusicBoard extends Component {
 
@@ -89,36 +90,41 @@ class MusicBoard extends Component {
         });
     }
 
+    turnOn(event){
+        this.setState({power: event.target.value});
+    }
+
     render() {
         return (
             <div
-                className="container"
-                autoFocus
-                tabIndex="-1"
+                className="container center"
+                tabIndex="0"
                 onKeyDown={(e) => this.onKeyPressed(e)}
             >
-            <div onClick={() => this.togglePower()}>
-                {this.state.power}
-            </div>
-            <BGMusicPlayer
-                on={this.state.power === "on" ? true : false}
-                sourcePath={process.env.PUBLIC_URL + "/sound/"}
-                options={["strings.wav", "synth.wav", "vocals.wav"]}
-            />
-            <div>{this.state.description}</div>
-                {
-                    this.buttons.map((buttonData, index) => {
-                        return (
-                            <SoundButton
-                                ref={(ref) => this.buttons[index].push(ref)}
-                                key={buttonData[0]}
-                                title={buttonData[0]}
-                                source={buttonData[1]}
-                                onAudioButtonClick={() => this.onAudioButtonClick(index)}
-                            />
-                        )
-                    })
-                }
+                <Switch
+                    checked={this.state.power === "on" ? true : false}
+                    onChange={(event) => this.turnOn(event)}
+                    value={this.state.power === "on" ? "off" : "on"}
+                />
+                <BGMusicPlayer
+                    on={this.state.power === "on" ? true : false}
+                    sourcePath={process.env.PUBLIC_URL + "../sound/"}
+                    options={["strings.wav", "synth.wav", "vocals.wav"]}
+                />
+                <div>{this.state.description}</div>
+                    {
+                        this.buttons.map((buttonData, index) => {
+                            return (
+                                <SoundButton
+                                    ref={(ref) => this.buttons[index].push(ref)}
+                                    key={buttonData[0]}
+                                    title={buttonData[0]}
+                                    source={buttonData[1]}
+                                    onAudioButtonClick={() => this.onAudioButtonClick(index)}
+                                />
+                            )
+                        })
+                    }
             </div>
             );
         }

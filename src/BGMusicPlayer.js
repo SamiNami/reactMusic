@@ -8,7 +8,7 @@ class BGMusicPlayer extends Component {
         this.state = {
             music: "off",
         };
-        
+
         this.songs = {};
     }
 
@@ -16,13 +16,7 @@ class BGMusicPlayer extends Component {
         this.setState({music: event.target.value});
     }
 
-    turnOff(event) {
-        this.setState({music: "off"});
-    }
-
-
     componentDidUpdate(prevProps, prevState) {
-
         if (!this.props.on) {
             this.turnAllOff(this.songs);
         }
@@ -39,6 +33,10 @@ class BGMusicPlayer extends Component {
     }
 
     turnAllOff(songs) {
+        if (!songs[this.state.music]) {
+            return;
+        }
+
         for (let audioTag in songs) {
             songs[audioTag].pause()
             songs[audioTag].currentTime = 0;
@@ -54,8 +52,8 @@ class BGMusicPlayer extends Component {
         return options.map((singleOption) => {
             return (
                 <audio key={singleOption} ref={(ref) => { this.songs[singleOption] = ref; }}>
-                    {/* fix path */}
-                    <source src={".." + sourcePath + singleOption} type="audio/mpeg" />
+
+                    <source src={sourcePath + singleOption} type="audio/mpeg" />
                 </audio>
             )
         });
@@ -63,9 +61,7 @@ class BGMusicPlayer extends Component {
 
     render() {
         const { on, sourcePath, options } = this.props;
-        if (!on) {
-            () => this.turnOff();
-        }
+
         return (
             <div>
                 <Select
