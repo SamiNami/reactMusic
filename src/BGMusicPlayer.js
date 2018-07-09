@@ -6,24 +6,54 @@ class BGMusicPlayer extends Component {
     constructor() {
         super()
         this.state = {
-            music: undefined,
+            music: "off",
         };
+        //
+        this.songs = {};
     }
 
     handleChange(event) {
         this.setState({music: event.target.value});
-        this.playSoundFromRef();
     }
 
     turnOff(event) {
-        this.setState({music: undefined});
+        this.setState({music: "off"});
     }
 
-    playSoundFromRef() {
-        // this.ref.pause()
-        // this.ref.currentTime = 0;
-        console.log("FIRES", this.ref)
-        this.ref.play()
+
+    componentDidUpdate(prevProps, prevState) {
+
+        console.log(prevProps, prevState)
+
+
+        if (this.state.music && this.songs[this.state.music]) {
+            this.turnAllOff(this.songs)
+            this.songs[this.state.music].loop = true;
+            this.songs[this.state.music].play();
+        }
+    }
+
+    turnAllOff(songs) {
+        for (let audioTag in songs) {
+            songs[audioTag].pause()
+            songs[audioTag].currentTime = 0;
+        }
+    }
+
+    createAudio(on, sourcePath, options) {
+
+        if (this.state.music === "off") {
+            return
+        }
+
+        return options.map((singleOption) => {
+            return (
+                <audio key={singleOption} ref={(ref) => { this.songs[singleOption] = ref; }}>
+                    {/* fix path */}
+                    <source src={".." + sourcePath + singleOption} type="audio/mpeg" />
+                </audio>
+            )
+        });
     }
 
     render() {
@@ -39,7 +69,7 @@ class BGMusicPlayer extends Component {
                     value={this.state.music}
                     onChange={(event) => this.handleChange(event)}
                 >
-                    <option value={undefined}>{"Choose Background Music"}</option>
+                    <option value={"off"}>{"Choose Background Music"}</option>
                     {
                         // only display more options if the player is on
                         on ? options.map((song) => {
@@ -48,17 +78,8 @@ class BGMusicPlayer extends Component {
                     }
 
                 </Select>
-                {console.log(sourcePath + this.state.music)}
-                {/* create the audio ref */}
-                {this.state.music ?
-                    <audio ref={(ref) => { this.ref = ref; }}>
-                        {/* fix path */}
-                        <source src={".." + sourcePath + this.state.music} type="audio/mpeg" />
-                    </audio>
-                    : null
-                }
 
-
+                {this.createAudio(on, sourcePath, options)}
             </div>
 
             );

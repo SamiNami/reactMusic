@@ -68,7 +68,6 @@ class MusicBoard extends Component {
 
 
     playSoundFromRef(ref) {
-        console.log("T", ref)
         ref.pause()
         ref.currentTime = 0;
         ref.play()
@@ -78,7 +77,6 @@ class MusicBoard extends Component {
         if (this.state.power === "off") {
             this.setState({
                 power: "on",
-                // description: "--------"
             });
             return
         }
