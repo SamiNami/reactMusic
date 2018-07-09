@@ -3,9 +3,8 @@ import Button from '@material-ui/core/Button';
 
 class SoundButton extends Component {
     render() {
-        const { title, source, description, onAudioButtonClick } = this.props;
+        const { title, source, onAudioButtonClick } = this.props;
         return (
-
             <Button onClick={() => {onAudioButtonClick(this.ref)}}>
                 {title}
                 <audio ref={(ref) => { this.ref = ref; }}>

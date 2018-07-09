@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 import SoundButton from "./SoundButton.js";
+import BGMusicPlayer from "./BGMusicPlayer.js"
 
 class MusicBoard extends Component {
 
@@ -21,9 +22,6 @@ class MusicBoard extends Component {
             ["Z", process.env.PUBLIC_URL + "/sound/z.wav", "Kick"],
             ["X", process.env.PUBLIC_URL + "/sound/x.wav", "Perc"],
             ["C", process.env.PUBLIC_URL + "/sound/c.wav", "Snap"],
-        ];
-        this.backgroundSounds = [
-            ["Synth", process.env.PUBLIC_URL + "/sound/synth.wav"]
         ];
     }
 
@@ -70,6 +68,7 @@ class MusicBoard extends Component {
 
 
     playSoundFromRef(ref) {
+        console.log("T", ref)
         ref.pause()
         ref.currentTime = 0;
         ref.play()
@@ -103,17 +102,22 @@ class MusicBoard extends Component {
             <div onClick={() => this.togglePower()}>
                 {this.state.power}
             </div>
+            <BGMusicPlayer
+                on={this.state.power === "on" ? true : false}
+                sourcePath={process.env.PUBLIC_URL + "/sound/"}
+                options={["strings.wav", "synth.wav", "vocals.wav"]}
+            />
             <div>{this.state.description}</div>
                 {
                     this.buttons.map((buttonData, index) => {
                         return (
                             <SoundButton
-                                ref={(ref) => { this.buttons[index].push(ref)}}
+                                ref={(ref) => this.buttons[index].push(ref)}
                                 key={buttonData[0]}
                                 title={buttonData[0]}
                                 source={buttonData[1]}
                                 onAudioButtonClick={() => this.onAudioButtonClick(index)}
-                             />
+                            />
                         )
                     })
                 }
