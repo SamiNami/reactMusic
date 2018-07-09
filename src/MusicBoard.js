@@ -12,8 +12,18 @@ class MusicBoard extends Component {
         };
         // bound button, sounds source, description
         this.buttons = [
-            ["Q", process.env.PUBLIC_URL + "/sound/q.wav", "Clap" ],
-            ["W", process.env.PUBLIC_URL + "/sound/w.wav", "Clap 2" ],
+            ["Q", process.env.PUBLIC_URL + "/sound/q.wav", "Clap 1"],
+            ["W", process.env.PUBLIC_URL + "/sound/w.wav", "Clap 2"],
+            ["E", process.env.PUBLIC_URL + "/sound/e.wav", "Crash 1"],
+            ["D", process.env.PUBLIC_URL + "/sound/d.wav", "Crash 2"],
+            ["S", process.env.PUBLIC_URL + "/sound/s.wav", "Hihat 1"],
+            ["A", process.env.PUBLIC_URL + "/sound/a.wav", "Hihat 2"],
+            ["Z", process.env.PUBLIC_URL + "/sound/z.wav", "Kick"],
+            ["X", process.env.PUBLIC_URL + "/sound/x.wav", "Perc"],
+            ["C", process.env.PUBLIC_URL + "/sound/c.wav", "Snap"],
+        ];
+        this.backgroundSounds = [
+            ["Synth", process.env.PUBLIC_URL + "/sound/synth.wav"]
         ];
     }
 
@@ -23,7 +33,6 @@ class MusicBoard extends Component {
     }
 
     onAudioButtonClick(i, key) {
-
             if (this.state.power === "off") {
                 return;
             }
@@ -31,7 +40,6 @@ class MusicBoard extends Component {
             // index handles onClick
             if (i || i === 0) {
                 buttonData = this.buttons[i];
-                console.log(i, buttonData)
             // else hanlde buttonpress
             } else {
                 buttonData = this.buttons.find((singleButton) => {
@@ -104,7 +112,6 @@ class MusicBoard extends Component {
                                 key={buttonData[0]}
                                 title={buttonData[0]}
                                 source={buttonData[1]}
-                                description={buttonData[2]}
                                 onAudioButtonClick={() => this.onAudioButtonClick(index)}
                              />
                         )
