@@ -88,7 +88,3 @@ class BGMusicPlayer extends Component {
     }
 
 export default BGMusicPlayer;
-
-/* <audio ref={(ref) => { this.ref = ref; }}>
-    <source src={source} type="audio/mpeg" />
-</audio> */

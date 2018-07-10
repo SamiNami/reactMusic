@@ -1,7 +1,5 @@
 .container {
   background-color: #03A9F4;
-  /*min-width: 400px;
-  min-height: 400px;*/
   margin-top: 40px;
   max-width: 600px;
   justify-content: center;
@@ -35,18 +33,9 @@
     width: 33%;
     height: 33%;
 }
-
-/*.item {
-    flex
-}*/
-
 .center {
     margin-left:  auto;
     margin-right:  auto;
     border: 1px solid black;
     padding: 10px;
-}
-
-.sound-button {
-    background-color: green;
 }

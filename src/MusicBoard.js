@@ -67,7 +67,6 @@ class MusicBoard extends Component {
         }, 500);
     }
 
-
     playSoundFromRef(ref) {
         ref.pause()
         ref.currentTime = 0;
@@ -76,9 +75,7 @@ class MusicBoard extends Component {
 
     togglePower() {
         if (this.state.power === "off") {
-            this.setState({
-                power: "on",
-            });
+            this.setState({power: "on"});
             return
         }
         if (this.timeout) {
@@ -96,11 +93,7 @@ class MusicBoard extends Component {
 
     render() {
         return (
-            <div
-                className="container center"
-                tabIndex="0"
-                onKeyDown={(e) => this.onKeyPressed(e)}
-            >
+            <div className="container center" onKeyDown={(e) => this.onKeyPressed(e)}>
                 <div className="top-panel">Drum Machine</div>
                 <div className="top-panel">
                     <Switch
