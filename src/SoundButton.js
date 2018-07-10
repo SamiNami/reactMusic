@@ -5,7 +5,7 @@ class SoundButton extends Component {
     render() {
         const { title, source, onAudioButtonClick } = this.props;
         return (
-            <Button onClick={() => {onAudioButtonClick(this.ref)}}>
+            <Button variant="contained" color="primary" className="big" onClick={() => {onAudioButtonClick(this.ref)}}>
                 {title}
                 <audio ref={(ref) => { this.ref = ref; }}>
                     <source src={source} type="audio/mpeg" />

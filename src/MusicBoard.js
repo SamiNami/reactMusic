@@ -101,17 +101,25 @@ class MusicBoard extends Component {
                 tabIndex="0"
                 onKeyDown={(e) => this.onKeyPressed(e)}
             >
-                <Switch
-                    checked={this.state.power === "on" ? true : false}
-                    onChange={(event) => this.turnOn(event)}
-                    value={this.state.power === "on" ? "off" : "on"}
-                />
-                <BGMusicPlayer
-                    on={this.state.power === "on" ? true : false}
-                    sourcePath={process.env.PUBLIC_URL + "../sound/"}
-                    options={["strings.wav", "synth.wav", "vocals.wav"]}
-                />
-                <div>{this.state.description}</div>
+                <div className="top-panel">Drum Machine</div>
+                <div className="top-panel">
+                    <Switch
+                        className="item"
+                        checked={this.state.power === "on" ? true : false}
+                        onChange={(event) => this.turnOn(event)}
+                        value={this.state.power === "on" ? "off" : "on"}
+                    />
+                    <BGMusicPlayer
+                        className="item"
+                        on={this.state.power === "on" ? true : false}
+                        sourcePath={process.env.PUBLIC_URL + "../sound/"}
+                        options={["strings.wav", "synth.wav", "vocals.wav"]}
+                    />
+                    <div className="panel">
+                        {this.state.description}
+                    </div>
+                </div>
+                <div className="bottom-panel">
                     {
                         this.buttons.map((buttonData, index) => {
                             return (
@@ -125,6 +133,8 @@ class MusicBoard extends Component {
                             )
                         })
                     }
+                </div>
+
             </div>
             );
         }

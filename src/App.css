@@ -1,15 +1,52 @@
 .container {
-  background-color: grey;
+  background-color: #03A9F4;
   /*min-width: 400px;
   min-height: 400px;*/
+  margin-top: 40px;
   max-width: 600px;
-  width: 50%;
-  margin-top: 50px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
+
+.top-panel {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    justify-content: space-around;
+    width: 100%
+}
+
+.bottom-panel {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.panel {
+    width: 60px;
+    margin-top: 10px;
+}
+
+.big {
+    width: 33%;
+    height: 33%;
+}
+
+/*.item {
+    flex
+}*/
 
 .center {
     margin-left:  auto;
     margin-right:  auto;
     border: 1px solid black;
     padding: 10px;
+}
+
+.sound-button {
+    background-color: green;
 }
